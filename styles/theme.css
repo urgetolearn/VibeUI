@@ -1,0 +1,11 @@
+:root {
+  --vibe-primary: #22d3ee;
+  --vibe-secondary: #a855f7;
+  --vibe-accent: #facc15;
+  --vibe-bg: #070916;
+  --vibe-surface: #111827;
+  --vibe-text: #e2e8f0;
+  --vibe-muted: #94a3b8;
+  --vibe-radius: 16px;
+  --vibe-shadow: 0 20px 40px rgba(0, 0, 0, 0.28);
+}

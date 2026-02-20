@@ -1,0 +1,46 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { GeneratedTheme } from "@/lib/types";
+import { ComponentPreview } from "@/components/component-preview";
+import { PalettePanel, TypographyPanel } from "@/components/theme-panels";
+
+export function LivePreview({ theme }: { theme: GeneratedTheme }) {
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45 }}
+      className="rounded-3xl border border-white/10 bg-black/25 p-6"
+    >
+      <header className="mb-5 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 className="text-2xl font-semibold text-vibe-text">{theme.name}</h2>
+          <p className="text-sm text-vibe-muted">{theme.vibe}</p>
+        </div>
+        <div className="rounded-xl border border-white/10 px-3 py-2 text-xs text-vibe-muted">
+          Layout: {theme.layout.density} / {theme.layout.radius}
+        </div>
+      </header>
+
+      <div className="grid gap-4 lg:grid-cols-3">
+        <PalettePanel theme={theme} />
+        <TypographyPanel theme={theme} />
+        <ComponentPreview theme={theme} />
+      </div>
+
+      <div className="mt-4 grid gap-4 md:grid-cols-3">
+        {["Insights", "Engagement", "Retention"].map((item, index) => (
+          <article
+            key={item}
+            className="rounded-2xl border border-white/10 p-4"
+            style={{ background: index === 0 ? `linear-gradient(130deg, ${theme.colors.primary}28, transparent)` : undefined }}
+          >
+            <p className="text-xs text-vibe-muted">{item}</p>
+            <p className="mt-2 text-2xl font-semibold text-vibe-text">{[89, 74, 91][index]}%</p>
+          </article>
+        ))}
+      </div>
+    </motion.section>
+  );
+}
