@@ -33,7 +33,11 @@ export function VibeInput({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.55, ease: "easeOut" }}
-      className="rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl"
+      className="rounded-3xl p-6 backdrop-blur-xl"
+      style={{
+        border: "1px solid color-mix(in oklab, var(--vibe-text), transparent 84%)",
+        background: "color-mix(in oklab, var(--vibe-surface), transparent 15%)"
+      }}
     >
       <h2 className="text-lg font-semibold text-vibe-text">Describe Your Vibe</h2>
       <p className="mt-2 text-sm text-vibe-muted">Prompt the design engine with mood, style, and product type.</p>
@@ -44,12 +48,20 @@ export function VibeInput({
           onChange={(event) => onVibeChange(event.target.value)}
           rows={3}
           placeholder="Example: dark cyberpunk dashboard for crypto portfolio tracking"
-          className="w-full rounded-2xl border border-white/15 bg-black/30 px-4 py-3 text-sm text-vibe-text outline-none transition focus:border-vibe-primary focus:ring-2 focus:ring-vibe-primary/30"
+          className="w-full rounded-2xl px-4 py-3 text-sm text-vibe-text outline-none transition focus:border-vibe-primary focus:ring-2 focus:ring-vibe-primary/30"
+          style={{
+            border: "1px solid color-mix(in oklab, var(--vibe-text), transparent 80%)",
+            background: "color-mix(in oklab, var(--vibe-surface), transparent 8%)"
+          }}
         />
         <select
           value={preset}
           onChange={(event) => onPresetChange(event.target.value as VibePreset | "auto")}
-          className="rounded-2xl border border-white/15 bg-black/30 px-3 py-2 text-sm text-vibe-text outline-none focus:border-vibe-primary"
+          className="rounded-2xl px-3 py-2 text-sm text-vibe-text outline-none focus:border-vibe-primary"
+          style={{
+            border: "1px solid color-mix(in oklab, var(--vibe-text), transparent 80%)",
+            background: "color-mix(in oklab, var(--vibe-surface), transparent 8%)"
+          }}
         >
           <option value="auto">Auto preset</option>
           {PRESET_KEYS.map((key) => (
@@ -73,7 +85,11 @@ export function VibeInput({
           <button
             key={example}
             onClick={() => onVibeChange(example)}
-            className="rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-vibe-muted transition hover:border-vibe-primary hover:text-vibe-text"
+            className="rounded-full px-3 py-1.5 text-xs text-vibe-muted transition hover:border-vibe-primary hover:text-vibe-text"
+            style={{
+              border: "1px solid color-mix(in oklab, var(--vibe-text), transparent 82%)",
+              background: "color-mix(in oklab, var(--vibe-surface), transparent 18%)"
+            }}
           >
             {example}
           </button>

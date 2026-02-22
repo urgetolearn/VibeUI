@@ -4,6 +4,24 @@ import JSZip from "jszip";
 import { GeneratedTheme } from "@/lib/types";
 
 function uiTemplate(theme: GeneratedTheme) {
+  const buttonTextTransform = theme.componentStyles.button.textTransform === "uppercase" ? "uppercase" : "none";
+  const primaryButtonBackground =
+    theme.componentStyles.button.style === "solid"
+      ? "var(--vibe-primary)"
+      : theme.componentStyles.button.style === "outline" || theme.componentStyles.button.style === "ghost"
+        ? "transparent"
+        : "linear-gradient(90deg, var(--vibe-primary), var(--vibe-secondary))";
+  const primaryButtonColor =
+    theme.componentStyles.button.style === "outline" || theme.componentStyles.button.style === "ghost"
+      ? "var(--vibe-text)"
+      : "#ffffff";
+  const formInputClasses =
+    theme.componentStyles.form.inputStyle === "underlined"
+      ? "input underlined"
+      : theme.componentStyles.form.inputStyle === "filled"
+        ? "input filled"
+        : "input outlined";
+
   return `import "./index.css";
 
 export default function App() {
@@ -11,7 +29,7 @@ export default function App() {
     <main className="min-h-screen p-8">
       <div className="mx-auto max-w-5xl">
         <h1 className="text-5xl font-bold">${theme.name}</h1>
-        <p className="mt-3 text-vibe-muted">${theme.vibe}</p>
+        <p className="mt-3 muted">${theme.vibe}</p>
 
         <section className="mt-8 grid gap-6 md:grid-cols-3">
           <article className="card">
@@ -31,9 +49,17 @@ export default function App() {
         <section className="mt-8 card">
           <h3 className="text-xl font-semibold">Quick Action</h3>
           <div className="mt-4 flex gap-3">
-            <button className="btn-primary">Generate</button>
+            <button className="btn-primary" style={{ textTransform: "${buttonTextTransform}", background: "${primaryButtonBackground}", color: "${primaryButtonColor}" }}>
+              Generate
+            </button>
             <button className="btn-secondary">Secondary</button>
           </div>
+        </section>
+
+        <section className="mt-8 card">
+          <h3 className="text-xl font-semibold">Form Preview</h3>
+          <label className="mt-4 block muted">Email</label>
+          <input className="${formInputClasses}" placeholder="founder@vibeui.dev" />
         </section>
       </div>
     </main>
@@ -66,19 +92,22 @@ body {
   font-family: "${theme.fonts.body}", sans-serif;
 }
 
+.muted {
+  color: var(--vibe-muted);
+}
+
 .card {
   background: var(--vibe-surface);
-  border: 1px solid color-mix(in oklab, var(--vibe-text), transparent 84%);
+  border: ${theme.componentStyles.card.border ? "1px solid color-mix(in oklab, var(--vibe-text), transparent 84%)" : "none"};
   border-radius: var(--vibe-radius);
   box-shadow: var(--vibe-shadow);
-  padding: 1.25rem;
+  padding: ${theme.componentStyles.card.padding === "sm" ? "0.85rem" : theme.componentStyles.card.padding === "lg" ? "1.7rem" : "1.25rem"};
+  backdrop-filter: ${theme.componentStyles.card.glass ? "blur(12px)" : "none"};
 }
 
 .btn-primary {
   border-radius: var(--vibe-radius);
-  background: linear-gradient(90deg, var(--vibe-primary), var(--vibe-secondary));
-  color: white;
-  border: none;
+  border: ${theme.componentStyles.button.style === "outline" ? `${theme.componentStyles.button.borderWidth}px solid var(--vibe-primary)` : `${theme.componentStyles.button.borderWidth}px solid transparent`};
   padding: 0.65rem 1rem;
 }
 
@@ -88,6 +117,36 @@ body {
   color: var(--vibe-text);
   border: 1px solid color-mix(in oklab, var(--vibe-text), transparent 60%);
   padding: 0.65rem 1rem;
+}
+
+.input {
+  margin-top: 0.45rem;
+  width: 100%;
+  border-radius: calc(var(--vibe-radius) * 0.75);
+  color: var(--vibe-text);
+  padding: 0.65rem 0.85rem;
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--vibe-muted);
+}
+
+.input.outlined {
+  border: 1px solid color-mix(in oklab, var(--vibe-text), transparent 70%);
+  background: transparent;
+}
+
+.input.filled {
+  border: 1px solid transparent;
+  background: color-mix(in oklab, var(--vibe-surface), white 8%);
+}
+
+.input.underlined {
+  border: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--vibe-text), transparent 65%);
+  border-radius: 0;
+  padding-left: 0;
 }
 `;
 }
